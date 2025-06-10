@@ -17,7 +17,7 @@ MarkItDown is a lightweight Python utility for converting various files to Markd
 
 MarkItDown currently supports the conversion from:
 
-- PDF
+- PDF (including fillable form fields)
 - PowerPoint
 - Word
 - Excel
@@ -38,6 +38,30 @@ OpenAI's GPT-4o, natively "_speak_" Markdown, and often incorporate Markdown int
 responses unprompted. This suggests that they have been trained on vast amounts of
 Markdown-formatted text, and understand it well. As a side benefit, Markdown conventions
 are also highly token-efficient.
+
+### PDF Form Field Extraction
+
+MarkItDown can extract fillable form fields from PDFs and represent them in structured markdown format:
+
+- Text fields: `[input_type=text, id=field_name, value=none]`
+- Date fields: `[input_type=date, id=field_name, value=none]`
+- Checkboxes: `[input_type=checkbox, id=field_name, checked=true/false]`
+- Select fields: `[input_type=select, id=field_name, value=none]`
+
+Form fields are placed on their correct pages in the markdown output, with clear page demarcations:
+
+```
+=====================================
+PDF PAGE 1/69
+=====================================
+
+Page content...
+
+<!-- Form fields for this page -->
+[input_type=text, id=field_name, value=none]
+```
+
+Pages without fillable elements are skipped (no empty form sections).
 
 ## Prerequisites
 MarkItDown requires Python 3.10 or higher. It is recommended to use a virtual environment to avoid dependency conflicts.
